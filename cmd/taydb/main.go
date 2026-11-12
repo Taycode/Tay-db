@@ -42,6 +42,7 @@ func main() {
 
 func run(db *store.Store, line string) {
 	command, args, _ := strings.Cut(strings.TrimSpace(line), " ")
+	args = strings.TrimSpace(args)
 	switch command {
 	case "set":
 		key, value, ok := strings.Cut(args, " ")
@@ -49,7 +50,7 @@ func run(db *store.Store, line string) {
 			fmt.Println("usage: set <key> <value>")
 			return
 		}
-		if err := db.Set(key, []byte(value)); err != nil {
+		if err := db.Set(key, []byte(strings.TrimSpace(value))); err != nil {
 			fmt.Println("error:", err)
 			return
 		}
